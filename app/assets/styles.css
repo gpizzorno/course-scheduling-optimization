@@ -1,0 +1,47 @@
+body {
+    padding: 0px 30px;
+}
+#initial-graph1 {
+    border-left: solid 1px grey;
+    width: 24%;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#initial-graph2 {
+    border-left: solid 1px grey;
+    width: 10%;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#initial-graph3 {
+    border-left: solid 2px grey;
+    width: 15%;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#final-graph1 {
+    border-left: solid 1px grey;
+    width: 24%;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#final-graph2 {
+    border-left: solid 1px grey;
+    width: 10%;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#final-graph3 {
+    border-left: solid 1px grey;
+    width: 15%;
+    display: inline-block;
+    margin-top: 20px;
+}
+.data-table {
+  max-height: 200px;
+}
