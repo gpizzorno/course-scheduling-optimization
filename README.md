@@ -37,16 +37,15 @@ $$
 where **$p_{c,t}\in\{0,1,\ldots,10\}$** with $p_{c,t} = 0$ meaning “unavailable” and $p_{c,t} = 1$ meaning “most preferred,” up to $10$ (least preferred). The random tie-breaker $\epsilon \sim \text{Uniform}(0.1, 1.0)$ offsets equal preferences, and $\text{popularity}(t)$ is the normalized penalty.
 
 $x_{c,t}$ is a binary variable that takes the value $1$ if course $c$ is assigned to slot $t$ and $0$ otherwise. Let $K = \{1,2,3,4,5\}$ represent the five start times (9:00, 10:30, 12:00, 1:30, 3:00), and $T_k \subset T$ the slots associated with each start time $k$. Let $V \subseteq C$ be the set of courses taught by voting faculty, and $t_{10}$ the Tuesday 3:00-4:15 pm slot. The optimization problem is formulated as:
-$$
-\begin{aligned}
+
+$$\begin{aligned}
 \text{maximize } & \sum_{c \in C} \sum_{t \in T} s_{c,t} \cdot x_{c,t} \\
 \text{subject to } & \sum_{t \in T} x_{c,t} = 1 \quad \forall c \in C,  && \text{course assigned to exactly one time slot}\\
 & \left| \sum_{c \in C} \sum_{t \in M} x_{c,t} - \sum_{c \in C} \sum_{t \in H} x_{c,t} \right| \leq 2, && \text{MWF/TT difference cannot exceed 2}\\
 & \max_{k \in K} \sum_{t \in T_k} \sum_{c \in C} x_{c,t} - \min_{k \in K} \sum_{t \in T_k} \sum_{c \in C} x_{c,t} \leq 2, && \text{least/most used slot difference cannot exceed 2}\\
 & \sum_{c \in V} x_{c,t_{10}} = 0, && \text{cannot assign voting faculty to T 3-5pm slot }\\
 & x_{c,t} \in \{0,1\} \quad \forall (c,t) \in C \times T.
-\end{aligned}
-$$
+\end{aligned}$$
 
 # Technical Implementation
 
@@ -63,6 +62,7 @@ The solution, as implemented in [`scheduling.ipynb`](scheduling.ipynb) follows t
 - **5. MIP solver:** Use [Google OR-Tools](https://developers.google.com/optimization/) *Coin-or branch and cut* (CBC) mixed integer programming solver to maximize total satisfaction. The absolute value and min/max constraints in the mathematical formulation are linearized using standard MIP techniques:
    - Absolute value constraint $|A - B| \leq 2$ becomes: $A - B \leq 2$ and $B - A \leq 2$
    - Min/max constraint becomes individual constraints for each start time: $\sum_{t \in T_k} \sum_{c \in C} x_{c,t} \geq \text{stime\_min}$ and $\sum_{t \in T_k} \sum_{c \in C} x_{c,t} \leq \text{stime\_max}$
+
 - **6. Solution extraction and visualization:** Output assignment matrix and verify constraint satisfaction.
 
 # Analysis and visualization of the results
