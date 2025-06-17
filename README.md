@@ -60,7 +60,7 @@ The solution, as implemented in [`scheduling.ipynb`](scheduling.ipynb) follows t
    - Tie-breaking: add random value $\epsilon \sim \text{Uniform}(0.1, 1.0)$
    - Clamp to non-negative values: $s_{c,t} = \max(0, \text{base} - \text{penalty} + \epsilon)$
 - **5. MIP solver:** Use [Google OR-Tools](https://developers.google.com/optimization/) *Coin-or branch and cut* (CBC) mixed integer programming solver to maximize total satisfaction. The absolute value and min/max constraints in the mathematical formulation are linearized using standard MIP techniques:
-   - Absolute value constraint $|A - B| \leq 2$ becomes: $A - B \leq 2$ and $B - A \leq 2$
+   - Absolute value constraint $|A - B| \leq 2$ becomes: $A - B \leq 2 \text{ and } B - A \leq 2$
    - Min/max constraint becomes individual constraints for each start time: $\sum_{t \in T_k} \sum_{c \in C} x_{c,t} \geq \text{stime\_min} \text{ and } \sum_{t \in T_k} \sum_{c \in C} x_{c,t} \leq \text{stime\_max}$
 
 - **6. Solution extraction and visualization:** Output assignment matrix and verify constraint satisfaction.
